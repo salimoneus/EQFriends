@@ -90,10 +90,13 @@ namespace EQFriends
             ProcessFolder();
         }
 
-        private void HandleError(ref Exception ex)
+        private void HandleError(ref Exception ex, bool displayError = false)
         {
             System.IO.File.AppendAllText(ErrorFile, ex.ToString());
-            MessageBox.Show(this, "An error has occurred.  Please check the logfile " + ErrorFile + " for details", "EQFriends");
+            if (displayError == true)
+            {
+                MessageBox.Show(this, "An error has occurred.  Please check the logfile " + ErrorFile + " for details", "EQFriends");
+            }
         }
 
         private void ProcessServer(bool bSelectAllFiles = true)
@@ -309,7 +312,7 @@ namespace EQFriends
             }
             catch (Exception ex)
             {
-                HandleError(ref ex);
+                HandleError(ref ex, false);
             }
         }
 
@@ -330,7 +333,7 @@ namespace EQFriends
             }
             catch (Exception ex)
             {
-                HandleError(ref ex);
+                HandleError(ref ex, false);
             }
         }
 
