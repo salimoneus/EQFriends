@@ -99,6 +99,7 @@
             this.listBoxDetails.FormattingEnabled = true;
             this.listBoxDetails.Location = new System.Drawing.Point(198, 134);
             this.listBoxDetails.Name = "listBoxDetails";
+            this.listBoxDetails.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listBoxDetails.Size = new System.Drawing.Size(141, 145);
             this.listBoxDetails.TabIndex = 5;
             this.listBoxDetails.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxDetails_KeyDown);

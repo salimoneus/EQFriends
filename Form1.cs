@@ -242,11 +242,11 @@ namespace EQFriends
         {
             if (e.KeyCode == Keys.Delete)
             {
-                if (listBoxDetails.SelectedIndex >= 0)
+                for (int selectedIndex = listBoxDetails.SelectedIndices.Count - 1; selectedIndex >= 0; --selectedIndex)
                 {
-                    listBoxDetails.Items.RemoveAt(listBoxDetails.SelectedIndex);
-                    UpdateDetailsTotal();
+                    listBoxDetails.Items.RemoveAt(listBoxDetails.SelectedIndices[selectedIndex]);
                 }
+                UpdateDetailsTotal();
             }
         }
 
