@@ -224,7 +224,7 @@
             this.buttonPasteReplace.Name = "buttonPasteReplace";
             this.buttonPasteReplace.Size = new System.Drawing.Size(76, 22);
             this.buttonPasteReplace.TabIndex = 18;
-            this.buttonPasteReplace.Text = "Paste/Replace";
+            this.buttonPasteReplace.Text = "Paste / Merge";
             this.buttonPasteReplace.UseVisualStyleBackColor = true;
             this.buttonPasteReplace.Click += new System.EventHandler(this.buttonPasteReplace_Click);
             // 

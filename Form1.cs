@@ -237,11 +237,13 @@ namespace EQFriends
 
         private void listBoxDetails_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
+            if ((e.KeyCode == Keys.Delete) && (listBoxDetails.SelectedItems != null))
             {
-                for (int selectedIndex = listBoxDetails.SelectedIndices.Count - 1; selectedIndex >= 0; --selectedIndex)
+                List<string> selectedItems = listBoxDetails.SelectedItems.Cast<string>().ToList();
+
+                for (int selectedIndex = 0; selectedIndex < selectedItems.Count; ++selectedIndex)
                 {
-                    listBoxDetails.Items.RemoveAt(listBoxDetails.SelectedIndices[selectedIndex]);
+                    listBoxDetails.Items.Remove(selectedItems[selectedIndex]);
                 }
                 UpdateDetailsTotal();
             }
@@ -438,8 +440,13 @@ namespace EQFriends
         {
             if (CopiedItems.Count > 0)
             {
+                List<string> workingList = listBoxDetails.Items.Cast<String>().ToList();
+                workingList.AddRange(CopiedItems.ToArray());
+                workingList.Sort();
+                
                 listBoxDetails.Items.Clear();
-                listBoxDetails.Items.AddRange(CopiedItems.ToArray());
+                listBoxDetails.Items.AddRange(workingList.Distinct().ToArray());
+                
                 UpdateDetailsTotal();
             }
         }
