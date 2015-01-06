@@ -36,13 +36,14 @@
             this.buttonNone = new System.Windows.Forms.Button();
             this.buttonAll = new System.Windows.Forms.Button();
             this.buttonUpdate = new System.Windows.Forms.Button();
-            this.labelTotal = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxServer = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.checkBoxBackup = new System.Windows.Forms.CheckBox();
+            this.buttonCopy = new System.Windows.Forms.Button();
+            this.buttonPasteReplace = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonSelectFolder
@@ -141,15 +142,6 @@
             this.buttonUpdate.UseVisualStyleBackColor = true;
             this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
-            // labelTotal
-            // 
-            this.labelTotal.AutoSize = true;
-            this.labelTotal.Location = new System.Drawing.Point(233, 289);
-            this.labelTotal.Name = "labelTotal";
-            this.labelTotal.Size = new System.Drawing.Size(69, 13);
-            this.labelTotal.TabIndex = 9;
-            this.labelTotal.Text = "Total Entries:";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -210,11 +202,39 @@
             this.checkBoxBackup.Text = "Create Backups";
             this.checkBoxBackup.UseVisualStyleBackColor = true;
             // 
+            // buttonCopy
+            // 
+            this.buttonCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCopy.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonCopy.Location = new System.Drawing.Point(202, 285);
+            this.buttonCopy.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonCopy.Name = "buttonCopy";
+            this.buttonCopy.Size = new System.Drawing.Size(50, 22);
+            this.buttonCopy.TabIndex = 17;
+            this.buttonCopy.Text = "Copy All";
+            this.buttonCopy.UseVisualStyleBackColor = true;
+            this.buttonCopy.Click += new System.EventHandler(this.buttonCopy_Click);
+            // 
+            // buttonPasteReplace
+            // 
+            this.buttonPasteReplace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPasteReplace.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPasteReplace.Location = new System.Drawing.Point(258, 285);
+            this.buttonPasteReplace.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonPasteReplace.Name = "buttonPasteReplace";
+            this.buttonPasteReplace.Size = new System.Drawing.Size(76, 22);
+            this.buttonPasteReplace.TabIndex = 18;
+            this.buttonPasteReplace.Text = "Paste/Replace";
+            this.buttonPasteReplace.UseVisualStyleBackColor = true;
+            this.buttonPasteReplace.Click += new System.EventHandler(this.buttonPasteReplace_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(360, 366);
+            this.Controls.Add(this.buttonPasteReplace);
+            this.Controls.Add(this.buttonCopy);
             this.Controls.Add(this.checkBoxBackup);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.radioButtonIgnored);
@@ -224,7 +244,6 @@
             this.Controls.Add(this.listBoxSelected);
             this.Controls.Add(this.buttonAll);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.labelTotal);
             this.Controls.Add(this.buttonSelectFolder);
             this.Controls.Add(this.listBoxDetails);
             this.Controls.Add(this.buttonUpdate);
@@ -251,13 +270,14 @@
         private System.Windows.Forms.Button buttonNone;
         private System.Windows.Forms.Button buttonAll;
         private System.Windows.Forms.Button buttonUpdate;
-        private System.Windows.Forms.Label labelTotal;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxServer;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox checkBoxBackup;
+        private System.Windows.Forms.Button buttonCopy;
+        private System.Windows.Forms.Button buttonPasteReplace;
     }
 }
 

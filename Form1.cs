@@ -19,6 +19,8 @@ namespace EQFriends
         private const string NullEntry = @"*NULL*";
         private const string ErrorFile = @"EQFriends.err";
         private const string BackupRootFolder = @"EQFriends_Backups";
+        private const string TitleBase = @"EQFriends";
+        private List<string> CopiedItems = new List<string>();
 
         private string m_folderName = String.Empty;
         private Dictionary<string, List<string>> m_friendsDb = new Dictionary<string, List<string>>();
@@ -209,16 +211,11 @@ namespace EQFriends
 
         private void UpdateDetailsTotal()
         {
-            labelTotal.Text = "Total: " + listBoxDetails.Items.Count;
-            if (listBoxDetails.Items.Count > 100)
+            this.Text = TitleBase;
+
+            if (listBoxDetails.Items.Count > 0)
             {
-                labelTotal.BackColor = Color.Maroon;
-                labelTotal.ForeColor = Color.White;
-            }
-            else
-            {
-                labelTotal.BackColor = SystemColors.Control;
-                labelTotal.ForeColor = Color.Black;
+                this.Text += " (" + listBoxDetails.Items.Count + ")";
             }
         }
 
@@ -430,6 +427,21 @@ namespace EQFriends
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             WriteConfigData();
+        }
+
+        private void buttonCopy_Click(object sender, EventArgs e)
+        {
+            CopiedItems = listBoxDetails.Items.Cast<String>().ToList();
+        }
+
+        private void buttonPasteReplace_Click(object sender, EventArgs e)
+        {
+            if (CopiedItems.Count > 0)
+            {
+                listBoxDetails.Items.Clear();
+                listBoxDetails.Items.AddRange(CopiedItems.ToArray());
+                UpdateDetailsTotal();
+            }
         }
     }
 }
