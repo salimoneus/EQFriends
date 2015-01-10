@@ -20,6 +20,7 @@ namespace EQFriends
         private const string ErrorFile = @"EQFriends.err";
         private const string BackupRootFolder = @"EQFriends_Backups";
         private const string TitleBase = @"EQFriends";
+        private const string SelectFolder = "<Select Everquest Folder>";
         private List<string> CopiedItems = new List<string>();
 
         private string m_folderName = String.Empty;
@@ -443,6 +444,11 @@ namespace EQFriends
         {
             InitData();
             ReadConfigData();
+
+            if (m_folderName == String.Empty)
+            {
+                buttonSelectFolder.Text = SelectFolder;
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
