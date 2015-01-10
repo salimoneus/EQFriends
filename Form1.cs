@@ -101,10 +101,16 @@ namespace EQFriends
             }
         }
 
+        private void ClearDetailsList()
+        {
+            listBoxDetails.Items.Clear();
+            listBoxDetails.BackColor = Color.White;
+        }
+
         private void ProcessServer(bool bSelectAllFiles = true)
         {
             listBoxSelected.Items.Clear();
-            listBoxDetails.Items.Clear();
+            ClearDetailsList();
             UpdateDetailsTotal();
 
             if ((m_folderName == null) || (m_folderName == String.Empty) || (comboBoxServer.Text == String.Empty))
@@ -188,7 +194,7 @@ namespace EQFriends
                             where !line.Contains(NullEntry)
                             select line.Split('=')[1].ToLower().Trim();
 
-            return myFriends.ToList();
+            return myFriends.Distinct().ToList();
         }
 
         private void buttonNone_Click(object sender, EventArgs e)
@@ -221,17 +227,30 @@ namespace EQFriends
 
         private void listBoxSelected_SelectedIndexChanged(object sender, EventArgs e)
         {
-            listBoxDetails.Items.Clear();
-            
+            ClearDetailsList();
             List<string> friendList = new List<string>();
 
             foreach (int selection in listBoxSelected.SelectedIndices)
             {
-                friendList.AddRange(m_friendsDb[listBoxSelected.Items[selection].ToString()].ToList());
+                List<string> selectedList = m_friendsDb[listBoxSelected.Items[selection].ToString()].ToList();
+
+                if (friendList.Count > 0)
+                {
+                    var firstNotSecond = friendList.Except(selectedList).ToList();
+                    var secondNotFirst = selectedList.Except(friendList).ToList();
+
+                    if ((firstNotSecond.Count > 0) || (secondNotFirst.Count > 0))
+                    {
+                        listBoxDetails.BackColor = Color.LightYellow;
+                    }
+                }
+
+                friendList.AddRange(selectedList);
+                friendList = friendList.Distinct().ToList();
             }
 
             friendList.Sort();
-            listBoxDetails.Items.AddRange(friendList.Distinct().ToArray());
+            listBoxDetails.Items.AddRange(friendList.ToArray());
             UpdateDetailsTotal();
         }
 
@@ -443,8 +462,8 @@ namespace EQFriends
                 List<string> workingList = listBoxDetails.Items.Cast<String>().ToList();
                 workingList.AddRange(CopiedItems.ToArray());
                 workingList.Sort();
-                
-                listBoxDetails.Items.Clear();
+
+                ClearDetailsList();
                 listBoxDetails.Items.AddRange(workingList.Distinct().ToArray());
                 
                 UpdateDetailsTotal();
