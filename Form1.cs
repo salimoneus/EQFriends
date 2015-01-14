@@ -242,7 +242,7 @@ namespace EQFriends
 
                     if ((firstNotSecond.Count > 0) || (secondNotFirst.Count > 0))
                     {
-                        listBoxDetails.BackColor = Color.LightYellow;
+                        listBoxDetails.BackColor = Color.Yellow;
                     }
                 }
 
