@@ -25,6 +25,7 @@ namespace EQFriends
 
         private string m_folderName = String.Empty;
         private Dictionary<string, List<string>> m_friendsDb = new Dictionary<string, List<string>>();
+        private bool m_requiresUpdate = false;
 
         public Form1()
         {
@@ -106,6 +107,7 @@ namespace EQFriends
         {
             listBoxDetails.Items.Clear();
             listBoxDetails.BackColor = Color.White;
+            m_requiresUpdate = false;
         }
 
         private void ProcessServer(bool bSelectAllFiles = true)
@@ -223,6 +225,19 @@ namespace EQFriends
             if (listBoxDetails.Items.Count > 0)
             {
                 this.Text += " (" + listBoxDetails.Items.Count + ")";
+
+                if (listBoxDetails.Items.Count > 100)
+                {
+                    listBoxDetails.BackColor =  ControlPaint.Light(Color.IndianRed);
+                }
+                else if (m_requiresUpdate)
+                {
+                    listBoxDetails.BackColor = ControlPaint.Light(Color.Yellow);
+                }
+                else
+                {
+                    listBoxDetails.BackColor = Color.White;
+                }
             }
         }
 
@@ -242,7 +257,8 @@ namespace EQFriends
 
                     if ((firstNotSecond.Count > 0) || (secondNotFirst.Count > 0))
                     {
-                        listBoxDetails.BackColor = Color.Yellow;
+                        listBoxDetails.BackColor = ControlPaint.Light(Color.Yellow);
+                        m_requiresUpdate = true;
                     }
                 }
 
