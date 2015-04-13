@@ -237,7 +237,7 @@ namespace EQFriends
                 {
                     detailsColor = ControlPaint.Light(Color.IndianRed);
                     statusColor = ControlPaint.Light(Color.IndianRed);
-                    statusText = "Deletions Required";
+                    statusText = "Deletions required";
                 }
                 else if (m_requiresUpdate)
                 {
