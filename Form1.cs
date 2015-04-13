@@ -26,6 +26,7 @@ namespace EQFriends
         private string m_folderName = String.Empty;
         private Dictionary<string, List<string>> m_friendsDb = new Dictionary<string, List<string>>();
         private bool m_requiresUpdate = false;
+        private bool m_processSelectionChanged = true;
 
         public Form1()
         {
@@ -110,7 +111,7 @@ namespace EQFriends
             m_requiresUpdate = false;
         }
 
-        private void ProcessServer(bool bSelectAllFiles = true)
+        private void ProcessServer()
         {
             listBoxSelected.Items.Clear();
             ClearDetailsList();
@@ -147,11 +148,7 @@ namespace EQFriends
             }
 
             this.Cursor = oldcursor;
-
-            if (bSelectAllFiles)
-            {
-                SelectAllFiles();
-            }
+            SelectAllFiles();
         }
 
         private List<string> GetServers()
@@ -207,10 +204,13 @@ namespace EQFriends
 
         private void SelectAllFiles()
         {
+            m_processSelectionChanged = false;
             for (int i = 0; i < listBoxSelected.Items.Count; ++i)
             {
                 listBoxSelected.SetSelected(i, true);
             }
+            m_processSelectionChanged = true;
+            listBoxSelected_SelectedIndexChanged(null, null);
         }
 
         private void buttonAll_Click(object sender, EventArgs e)
@@ -220,29 +220,54 @@ namespace EQFriends
 
         private void UpdateDetailsTotal()
         {
-            this.Text = TitleBase;
-
+            Color statusColor = Color.White;
+            Color detailsColor = Color.White;
+            String titleText = TitleBase;
+            String combinedFriendsText = "";
+            String filesParsedText = "";
+            String statusText = "";
+            
             if (listBoxDetails.Items.Count > 0)
             {
-                this.Text += " (" + listBoxDetails.Items.Count + ")";
+                titleText += " (" + listBoxDetails.Items.Count + ")";
+                combinedFriendsText = listBoxDetails.Items.Count.ToString();
+                filesParsedText = listBoxSelected.SelectedIndices.Count.ToString();
 
                 if (listBoxDetails.Items.Count > 100)
                 {
-                    listBoxDetails.BackColor =  ControlPaint.Light(Color.IndianRed);
+                    detailsColor = ControlPaint.Light(Color.IndianRed);
+                    statusColor = ControlPaint.Light(Color.IndianRed);
+                    statusText = "Deletions Required";
                 }
                 else if (m_requiresUpdate)
                 {
-                    listBoxDetails.BackColor = ControlPaint.Light(Color.Yellow);
+                    detailsColor = ControlPaint.Light(Color.Yellow);
+                    statusColor = ControlPaint.Light(Color.Yellow);
+                    statusText = "Update recommended";
                 }
                 else
                 {
-                    listBoxDetails.BackColor = Color.White;
+                    detailsColor = Color.White;
+                    statusColor = Color.White;
+                    statusText = "No updated needed";
                 }
             }
+
+            panelStatus.BackColor = statusColor;
+            listBoxDetails.BackColor = detailsColor;
+            labelTotalCombinedFriends.Text = combinedFriendsText;
+            labelCharacterFilesParsed.Text = filesParsedText;
+            labelStatus.Text = statusText;
+            this.Text = titleText;
         }
 
         private void listBoxSelected_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (m_processSelectionChanged == false)
+            {
+                return;
+            }
+
             ClearDetailsList();
             List<string> friendList = new List<string>();
 
@@ -310,7 +335,7 @@ namespace EQFriends
         {
             checkBoxBackup.Checked = dataSet.DoBackup;
             m_folderName = dataSet.EQFolder;
-            
+            tabControl.SelectedIndex = dataSet.SelectedTabIndex;
             ProcessFolder(dataSet.EQServer);
         }
 
@@ -320,6 +345,8 @@ namespace EQFriends
 
             dataSet.DoBackup = checkBoxBackup.Checked;
             dataSet.EQFolder = m_folderName;
+            dataSet.SelectedTabIndex = tabControl.SelectedIndex;
+
             if (comboBoxServer.SelectedItem == null)
             {
                 dataSet.EQServer = String.Empty;
@@ -430,7 +457,7 @@ namespace EQFriends
                 System.IO.File.WriteAllLines(fullFilePathName, newFile);
             }
 
-            ProcessServer(false);
+            ProcessServer();
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
@@ -489,6 +516,14 @@ namespace EQFriends
                 listBoxDetails.Items.AddRange(workingList.Distinct().ToArray());
                 
                 UpdateDetailsTotal();
+            }
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((tabControl.SelectedTab.Text == "Basic") && (listBoxDetails.SelectedIndices.Count < listBoxDetails.Items.Count))
+            {
+                SelectAllFiles();
             }
         }
     }

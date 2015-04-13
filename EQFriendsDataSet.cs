@@ -28,5 +28,12 @@ namespace EQFriends
             get { return doBackup; }
             set { doBackup = value; }
         }
+
+        protected int selectedTabIndex = 0;
+        public int SelectedTabIndex
+        {
+            get { return selectedTabIndex; }
+            set { selectedTabIndex = value; }
+        }
     }
 }
