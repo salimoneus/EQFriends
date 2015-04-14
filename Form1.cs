@@ -524,6 +524,7 @@ namespace EQFriends
             if ((tabControl.SelectedTab.Text == "Basic") && (listBoxDetails.SelectedIndices.Count < listBoxDetails.Items.Count))
             {
                 SelectAllFiles();
+                radioButtonFriends.Checked = true;
             }
         }
     }
